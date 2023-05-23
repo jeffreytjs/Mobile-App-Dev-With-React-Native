@@ -15,6 +15,16 @@ export default function App() {
     setInput("");
   }
 
+  function renderEntries() {
+    return data.map((entry, index) => {
+      return (
+        <Text key={index} style={styles.entryText}>
+          {index + 1}. {entry}
+        </Text>
+      );
+    });
+  }
+
   return (
     <View style={styles.container}>
       <Text>Todo Entry:</Text>
@@ -24,9 +34,7 @@ export default function App() {
         onChangeText={handleInput}
       />
       <Button title="Add" onPress={addEntry} />
-      <View>
-        <Text>{JSON.stringify(data)}</Text>
-      </View>
+      <View>{renderEntries()}</View>
       <StatusBar style="auto" />
     </View>
   );
@@ -44,5 +52,8 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 40,
     padding: 5,
+  },
+  entryText: {
+    padding: 10,
   },
 });
