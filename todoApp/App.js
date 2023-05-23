@@ -15,18 +15,27 @@ export default function App() {
     setInput("");
   }
 
+  function deleteEntry(index) {
+    const newData = [...data.slice(0, index), ...data.slice(index + 1)];
+    setData(newData);
+  }
+
   function renderEntries() {
     return data.map((entry, index) => {
       return (
-        <Text key={index} style={styles.entryText}>
-          {index + 1}. {entry}
-        </Text>
+        <View key={index} style={styles.entryContainer}>
+          <Text style={styles.entryText}>
+            {index + 1}. {entry}
+          </Text>
+          <Button onPress={() => deleteEntry(index)} title="Delete" />
+        </View>
       );
     });
   }
 
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
       <Text>Todo Entry:</Text>
       <TextInput
         style={styles.textInput}
@@ -35,7 +44,6 @@ export default function App() {
       />
       <Button title="Add" onPress={addEntry} />
       <View>{renderEntries()}</View>
-      <StatusBar style="auto" />
     </View>
   );
 }
@@ -52,6 +60,9 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 40,
     padding: 5,
+  },
+  entryContainer: {
+    flexDirection: "row",
   },
   entryText: {
     padding: 10,
