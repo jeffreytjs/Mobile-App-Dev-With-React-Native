@@ -14,14 +14,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DATA_KEY } from "../config";
 
 export default function EntryInput({ navigation }) {
-  const [input, setInput] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
 
-  function handleInput(text) {
-    setInput(text);
-  }
   function handleName(text) {
     setName(text);
   }
@@ -56,7 +52,6 @@ export default function EntryInput({ navigation }) {
       return;
     }
     console.log(entries);
-    setInput("");
     setName("");
     setPhone("");
     setAddress("");
