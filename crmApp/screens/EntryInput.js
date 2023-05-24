@@ -29,7 +29,7 @@ export default function EntryInput({ navigation }) {
   }
 
   function validatePhoneNumber(phoneNumber) {
-    let re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+    let re = /^[\+]?[(]?[0-9]{0,3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
     return re.test(phoneNumber);
   }
@@ -40,7 +40,10 @@ export default function EntryInput({ navigation }) {
       return;
     }
     if (!validatePhoneNumber(phone)) {
-      Alert.alert("Error", "Please enter a valid phone number!");
+      Alert.alert(
+        "Error",
+        "Please enter a valid phone number with at least 8 digits!"
+      );
       return;
     }
 
