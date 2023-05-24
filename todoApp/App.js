@@ -74,6 +74,7 @@ export default function App() {
       <StatusBar style="auto" />
       <Text>Todo Entry:</Text>
       <TextInput
+        multiline={true}
         style={styles.textInput}
         value={input}
         onChangeText={handleInput}
@@ -98,7 +99,6 @@ const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
     width: "90%",
-    height: 40,
     padding: 5,
   },
   entryButton: {
