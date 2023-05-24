@@ -19,6 +19,11 @@ export default function App() {
   }
 
   function addEntry() {
+    if (!input) {
+      Alert.alert("Error", "Please enter a todo entry!");
+      return;
+    }
+
     setData([...data, input]);
     setInput("");
   }
@@ -81,9 +86,9 @@ export default function App() {
           onChangeText={handleInput}
         />
       </View>
-        <View style={styles.entryFormButton}>
-          <Button title="Add" onPress={addEntry} />
-        </View>
+      <View style={styles.entryFormButton}>
+        <Button title="Add" onPress={addEntry} />
+      </View>
       <FlatList
         style={styles.scrollViewStyle}
         data={data}
