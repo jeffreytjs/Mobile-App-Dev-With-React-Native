@@ -4,6 +4,9 @@ import IconButton from "./components/IconButton";
 import EntryInput from "./screens/EntryInput";
 import EntryListing from "./screens/EntryListing";
 import React from "react";
+import { HEADER_COLOR } from "./config";
+import { ADD_CUSTOMER_SCREEN_TITLE } from "./config";
+import { MAIN_SCREEN_TITLE } from "./config";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,13 +16,13 @@ export default function App() {
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: "#229ED9",
+            backgroundColor: HEADER_COLOR,
           },
           headerTintColor: "white",
         }}
       >
         <Stack.Screen
-          name="CRM App"
+          name={MAIN_SCREEN_TITLE}
           component={EntryListing}
           options={({ navigation }) => ({
             headerRight: () => (
@@ -29,13 +32,13 @@ export default function App() {
                 size={24}
                 color="white"
                 onPress={() => {
-                  navigation.navigate("Add Customer");
+                  navigation.navigate(ADD_CUSTOMER_SCREEN_TITLE);
                 }}
               />
             ),
           })}
         />
-        <Stack.Screen name="Add Customer" component={EntryInput} />
+        <Stack.Screen name={ADD_CUSTOMER_SCREEN_TITLE} component={EntryInput} />
       </Stack.Navigator>
     </NavigationContainer>
   );
