@@ -72,14 +72,18 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <TextInput
-        placeholder="Enter todo entry"
-        multiline={true}
-        style={styles.textInput}
-        value={input}
-        onChangeText={handleInput}
-      />
-      <Button title="Add" onPress={addEntry} />
+      <View style={styles.entryForm}>
+        <TextInput
+          placeholder="Enter todo entry"
+          multiline={true}
+          style={styles.textInput}
+          value={input}
+          onChangeText={handleInput}
+        />
+      </View>
+      <View style={styles.entryFormButton}>
+        <Button title="Add" onPress={addEntry} />
+      </View>
       <FlatList
         style={styles.scrollViewStyle}
         data={data}
@@ -108,7 +112,16 @@ const styles = StyleSheet.create({
   entryContainer: {
     flexDirection: "row",
   },
+  entryForm: {
+    flexDirection: "row",
+    margin: 20,
+  },
+  entryFormButton: {
+    justifyContent: "center",
+    marginLeft: 5,
+  },
   entryText: {
+    flex: 3,
     padding: 10,
   },
   scrollViewStyle: {
