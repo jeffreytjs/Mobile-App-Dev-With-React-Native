@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
   Button,
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
@@ -40,6 +40,17 @@ export default function App() {
     });
   }
 
+  function renderEntry({ item, index }) {
+    return (
+      <View key={index} style={styles.entryContainer}>
+        <Text style={styles.entryText}>
+          {index + 1}. {item}
+        </Text>
+        <Button onPress={() => deleteEntry(index)} title="Delete" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -50,7 +61,11 @@ export default function App() {
         onChangeText={handleInput}
       />
       <Button title="Add" onPress={addEntry} />
-      <ScrollView style={styles.scrollViewStyle}>{renderEntries()}</ScrollView>
+      <FlatList
+        style={styles.scrollViewStyle}
+        data={data}
+        renderItem={renderEntry}
+      />
     </View>
   );
 }
