@@ -49,8 +49,9 @@ export default function App() {
         </Text>
         <View style={styles.entryButton}>
           <Button
+            title="Delete"
             onPress={() => {
-              Alert.alert("Todo", "Do you want to delete?", [
+              Alert.alert("Delete", `Are you sure you want to delete ${item}`, [
                 {
                   text: "Yes",
                   onPress: () => {
@@ -62,7 +63,6 @@ export default function App() {
                 },
               ]);
             }}
-            title="Delete"
           />
         </View>
       </View>
@@ -81,9 +81,9 @@ export default function App() {
           onChangeText={handleInput}
         />
       </View>
-      <View style={styles.entryFormButton}>
-        <Button title="Add" onPress={addEntry} />
-      </View>
+        <View style={styles.entryFormButton}>
+          <Button title="Add" onPress={addEntry} />
+        </View>
       <FlatList
         style={styles.scrollViewStyle}
         data={data}
