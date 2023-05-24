@@ -28,9 +28,21 @@ export default function EntryInput({ navigation }) {
     setAddress(text);
   }
 
+  function validatePhoneNumber(phoneNumber) {
+    let re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+    return re.test(phoneNumber);
+  }
+
   async function addEntry() {
-    //ignore empty entries
-    if (name === "") return;
+    if (!name) {
+      Alert.alert("Error", "Please enter a name!");
+      return;
+    }
+    if (!validatePhoneNumber(phone)) {
+      Alert.alert("Error", "Please enter a valid phone number!");
+      return;
+    }
 
     let entries = [];
     try {
