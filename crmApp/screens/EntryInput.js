@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  Text,
   TextInput,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -14,14 +15,26 @@ import { DATA_KEY } from "../config";
 
 export default function EntryInput({ navigation }) {
   const [input, setInput] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
 
   function handleInput(text) {
     setInput(text);
   }
+  function handleName(text) {
+    setName(text);
+  }
+  function handlePhone(text) {
+    setPhone(text);
+  }
+  function handleAddress(text) {
+    setAddress(text);
+  }
 
   async function addEntry() {
     //ignore empty entries
-    if (input === "") return;
+    if (name === "") return;
 
     let entries = [];
     try {
@@ -30,9 +43,9 @@ export default function EntryInput({ navigation }) {
 
     if (entries) {
       entries = JSON.parse(entries);
-      entries = [...entries, input];
+      entries = [...entries, [name, phone, address]];
     } else {
-      entries = [input];
+      entries = [[name, phone, address]];
     }
     entries = JSON.stringify(entries);
 
@@ -42,9 +55,12 @@ export default function EntryInput({ navigation }) {
       Alert.alert("Unable to save the entry. Please try again");
       return;
     }
-    //console.log(entries);
+    console.log(entries);
     setInput("");
-    navigation.navigate("EntryListing");
+    setName("");
+    setPhone("");
+    setAddress("");
+    navigation.navigate("Customers");
   }
 
   return (
@@ -52,13 +68,32 @@ export default function EntryInput({ navigation }) {
       behavior={Platform.OS === "ios" ? "padding" : null}
       style={styles.container}
     >
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
+      <Text style={styles.text}>Name</Text>
       <TextInput
         style={styles.textInput}
-        value={input}
-        onChangeText={handleInput}
+        value={name}
+        onChangeText={handleName}
         multiline={true}
-        placeholder="Enter todo entry"
+        placeholder="Joe Doe"
+        autoFocus={true}
+      />
+      <Text style={styles.text}>Phone</Text>
+      <TextInput
+        style={styles.textInput}
+        value={phone}
+        onChangeText={handlePhone}
+        multiline={true}
+        placeholder="91234567"
+        autoFocus={true}
+      />
+      <Text style={styles.text}>Address</Text>
+      <TextInput
+        style={styles.textInput}
+        value={address}
+        onChangeText={handleAddress}
+        multiline={true}
+        placeholder="123 Ang Mo kio"
         autoFocus={true}
       />
       <Button title="Add" onPress={addEntry} />
@@ -74,13 +109,15 @@ const styles = StyleSheet.create({
     marginVertical: 40,
     marginHorizontal: 20,
   },
+  text: {
+    padding: 3,
+  },
   textInput: {
     borderRadius: 6,
     backgroundColor: "white",
-    fontSize: 20,
+    fontSize: 15,
     padding: 5,
     marginBottom: 10,
-    minHeight: 200,
   },
   entryButton: {
     flex: 1,
