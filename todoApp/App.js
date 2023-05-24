@@ -111,6 +111,18 @@ const styles = StyleSheet.create({
   },
   entryContainer: {
     flexDirection: "row",
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: "#a4a4a4",
+    margin: 5,
+
+    backgroundColor: "white",
+    elevation: 4,
+
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    shadowOpacity: 0.25,
   },
   entryForm: {
     flexDirection: "row",
