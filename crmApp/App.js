@@ -13,13 +13,13 @@ export default function App() {
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: "green",
+            backgroundColor: "#229ED9",
           },
           headerTintColor: "white",
         }}
       >
         <Stack.Screen
-          name="Customers"
+          name="CRM App"
           component={EntryListing}
           options={({ navigation }) => ({
             headerRight: () => (

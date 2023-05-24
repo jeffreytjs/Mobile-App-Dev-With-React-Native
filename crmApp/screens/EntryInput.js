@@ -60,7 +60,7 @@ export default function EntryInput({ navigation }) {
     setName("");
     setPhone("");
     setAddress("");
-    navigation.navigate("Customers");
+    navigation.navigate("CRM App");
   }
 
   return (
