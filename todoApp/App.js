@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function App() {
   const [input, setInput] = useState("");
@@ -43,7 +50,7 @@ export default function App() {
         onChangeText={handleInput}
       />
       <Button title="Add" onPress={addEntry} />
-      <View>{renderEntries()}</View>
+      <ScrollView style={styles.scrollViewStyle}>{renderEntries()}</ScrollView>
     </View>
   );
 }
@@ -66,5 +73,9 @@ const styles = StyleSheet.create({
   },
   entryText: {
     padding: 10,
+  },
+  scrollViewStyle: {
+    width: "80%",
+    maxHeight: "60%",
   },
 });
