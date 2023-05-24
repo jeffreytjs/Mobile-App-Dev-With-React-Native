@@ -72,8 +72,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>Todo Entry:</Text>
       <TextInput
+        placeholder="Enter todo entry"
         multiline={true}
         style={styles.textInput}
         value={input}
