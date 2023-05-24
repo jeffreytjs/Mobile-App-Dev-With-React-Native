@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
+  Alert,
   Button,
   FlatList,
   StyleSheet,
@@ -46,7 +47,24 @@ export default function App() {
         <Text style={styles.entryText}>
           {index + 1}. {item}
         </Text>
-        <Button onPress={() => deleteEntry(index)} title="Delete" />
+        <View style={styles.entryButton}>
+          <Button
+            onPress={() => {
+              Alert.alert("Todo", "Do you want to delete?", [
+                {
+                  text: "Yes",
+                  onPress: () => {
+                    deleteEntry(index);
+                  },
+                },
+                {
+                  text: "No",
+                },
+              ]);
+            }}
+            title="Delete"
+          />
+        </View>
       </View>
     );
   }
@@ -82,6 +100,10 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 40,
     padding: 5,
+  },
+  entryButton: {
+    flex: 1,
+    justifyContent: "center",
   },
   entryContainer: {
     flexDirection: "row",
