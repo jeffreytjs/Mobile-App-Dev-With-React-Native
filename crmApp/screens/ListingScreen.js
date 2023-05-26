@@ -12,9 +12,9 @@ import {
   Text,
   View,
 } from "react-native";
-import { DATA_KEY } from "../config";
+import config from "../config";
 
-function EntryListing() {
+function ListingScreen() {
   const [data, setData] = useState([]);
   const isFocused = useIsFocused();
 
@@ -28,7 +28,7 @@ function EntryListing() {
     const entries = JSON.stringify(updatedData);
 
     try {
-      await AsyncStorage.setItem(DATA_KEY, entries);
+      await AsyncStorage.setItem(config.DATA_KEY, entries);
     } catch (error) {
       Alert.alert("Unable to save the entry. Please try again");
     }
@@ -45,7 +45,7 @@ function EntryListing() {
     let entries = [];
 
     try {
-      entries = await AsyncStorage.getItem(DATA_KEY);
+      entries = await AsyncStorage.getItem(config.DATA_KEY);
       entries = JSON.parse(entries);
     } catch (error) {}
 
@@ -114,7 +114,7 @@ function EntryListing() {
     </View>
   );
 }
-export default EntryListing;
+export default ListingScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import {
   Alert,
@@ -11,12 +11,41 @@ import {
   TextInput,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { DATA_KEY } from "../config";
+import config from "../config";
 
-export default function EntryInput({ navigation }) {
+export default function InputScreen({ navigation }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+
+  const nameTextInput = useRef(null);
+  const phoneTextInput = useRef(null);
+  const addressTextInput = useRef(null);
+
+  function getValidateCustomer() {
+    const nameTrimmed = name.trim();
+    const phoneTrimmed = phone.trim();
+    const addressTrimmed = address.trim();
+
+    if (nameTrimmed === "") {
+      Alert.alert(config.TITLE, "Please fill in the name");
+      nameTextInput.current.focus();
+      return null;
+    }
+
+    if (phoneTrimmed === "") {
+      Alert.alert(config.TITLE, "Please fill in the phone number");
+      phoneTextInput.current.focus();
+      return null;
+    }
+
+    if (addressTrimmed === "") {
+      Alert.alert(config.TITLE, "Please fill in the address");
+      addressTextInput.current.focus();
+      return null;
+    }
+    return [nameTrimmed, phoneTrimmed, addressTrimmed];
+  }
 
   function handleName(text) {
     setName(text);
@@ -28,30 +57,16 @@ export default function EntryInput({ navigation }) {
     setAddress(text);
   }
 
-  function validatePhoneNumber(phoneNumber) {
-    let re = /^[\+]?[(]?[0-9]{0,3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-
-    return re.test(phoneNumber);
-  }
-
   async function addEntry() {
-    if (!name) {
-      Alert.alert("Error", "Please enter a name!");
-      return;
-    }
-    if (!validatePhoneNumber(phone)) {
-      Alert.alert(
-        "Error",
-        "Please enter a valid phone number with at least 8 digits!"
-      );
+    const customer = getValidateCustomer();
+    if (!customer) {
       return;
     }
 
     let entries = [];
     try {
-      entries = await AsyncStorage.getItem(DATA_KEY);
+      entries = await AsyncStorage.getItem(config.DATA_KEY);
     } catch (e) {}
-
     if (entries) {
       entries = JSON.parse(entries);
       entries = [...entries, [name, phone, address]];
@@ -59,9 +74,8 @@ export default function EntryInput({ navigation }) {
       entries = [[name, phone, address]];
     }
     entries = JSON.stringify(entries);
-
     try {
-      await AsyncStorage.setItem(DATA_KEY, entries);
+      await AsyncStorage.setItem(config.DATA_KEY, entries);
     } catch (error) {
       Alert.alert("Unable to save the entry. Please try again");
       return;
@@ -87,6 +101,11 @@ export default function EntryInput({ navigation }) {
         multiline={true}
         placeholder="Joe Doe"
         autoFocus={true}
+        onSubmitEditing={() => {
+          phoneTextInput.current.focus();
+        }}
+        ref={nameTextInput}
+        returnKeyType="next"
       />
       <Text style={styles.text}>Phone</Text>
       <TextInput
@@ -96,6 +115,11 @@ export default function EntryInput({ navigation }) {
         multiline={true}
         placeholder="91234567"
         autoFocus={true}
+        onSubmitEditing={() => {
+          addressTextInput.current.focus();
+        }}
+        ref={phoneTextInput}
+        returnKeyType="next"
       />
       <Text style={styles.text}>Address</Text>
       <TextInput
@@ -105,6 +129,7 @@ export default function EntryInput({ navigation }) {
         multiline={true}
         placeholder="123 Ang Mo kio"
         autoFocus={true}
+        ref={addressTextInput}
       />
       <Button title="Add" onPress={addEntry} />
     </KeyboardAvoidingView>
