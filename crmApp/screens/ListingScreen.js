@@ -53,7 +53,6 @@ function ListingScreen() {
   }
 
   function renderEntry({ item, index }) {
-    console.log(item);
     return (
       <View key={index} style={styles.entryContainer}>
         <Text style={styles.entryText}>

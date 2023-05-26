@@ -80,7 +80,7 @@ export default function InputScreen({ navigation }) {
       Alert.alert("Unable to save the entry. Please try again");
       return;
     }
-    console.log(entries);
+
     setName("");
     setPhone("");
     setAddress("");
